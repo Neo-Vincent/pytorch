@@ -45,13 +45,13 @@ def type_argument_translations(arg):
     nullable = (t != 'Generator?' and '?' in t)
 
     # This enables "Generator? x = None and translates to legacy
-    # "Generator* x = nullptr". See [temp translations].
+    # "Generator x = nullptr". See [temp translations].
     if t == 'Generator?' and default == 'None':
-        t = 'Generator*'
+        t = 'Generator'
         default = 'nullptr'
     # Enables Generator? by translating to legacy Generator*.
     elif t == "Generator?":
-        t = 'Generator*'
+        t = 'Generator'
     # Enables Tensor[] by translating to legacy TensorList.
     elif t == 'Tensor[]' or t == 'Tensor?[]':
         t = 'TensorList'
@@ -104,8 +104,8 @@ def type_argument_translations(arg):
         size = int(match.group(1))
 
     # Legacy type sanitization. TODO: Do we really need this?
-    if t == 'Generator*':
-        t = 'Generator *'
+    if t == 'Generator':
+        t = 'Generator'
 
     if not default:
         pass
